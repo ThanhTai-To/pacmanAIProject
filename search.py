@@ -63,16 +63,6 @@ def depthFirstSearch(problem):
     return a path to the goal
     '''
     # TODO 05
-    """
-    Search the deepest nodes in the search frontier first [p 85].
-    Your search algorithm needs to return a list of actions that reaches
-    the goal.  Make sure to implement a graph search algorithm [Fig. 3.7].
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    """
     from util import Stack
 
     # the component of frontier is (state, the path to the state)
@@ -99,7 +89,7 @@ def depthFirstSearch(problem):
 
 
       if(problem.isGoalState(state)):
-        print(f"\n\n\n\n\n\nGoal, state={state} ")
+        print(f"\n\n\n\n\n\nGoal, state={state} , path: {path}")
         break
 
       # successors contain node, game.Grid, path, cost
@@ -135,7 +125,8 @@ def breadthFirstSearch(problem):
     while(not frontier.isEmpty()):
         (state, path) = frontier.dequeue()
         if(problem.isGoalState(state)):
-            break
+            print(f"path: {path}")
+            return path
 
         successors = problem.getSuccessors(state)
         for i in successors:
@@ -156,17 +147,17 @@ def uniformCostSearch(problem):
     from util import PriorityQueue
 
     frontier = PriorityQueue()
-    frontier.push(((problem.getStartState()), [], 0), 0)
+    frontier.push((problem.getStartState(), [], 0), 0)
+
     print(problem.getStartState())
     visited = []
 
     while not frontier.isEmpty():
 
-        print(f"\n\nfrontier: {frontier}")
+        #print(f"\n\nfrontier: {frontier}")
 
-        #
         curNode, path, curCost = frontier.pop()
-        print(f"\n\tcurCost: {curCost}, curNode: {curNode}, path: {path}")
+        #print(f"\n\tcurCost: {curCost}, curNode: {curNode}, path: {path}")
 
         if curNode not in visited:
             visited.append(curNode)
@@ -176,7 +167,7 @@ def uniformCostSearch(problem):
                 return path
 
             successors = problem.getSuccessors(curNode)
-            print(f"\n\t\t{successors}")
+            #print(f"\n\t\t{successors}")
 
             for neighborNode, direction, cost in successors:
                 #if neighbor not in visited:
